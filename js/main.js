@@ -490,62 +490,80 @@ window.router = (viewName) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Inicializar el observer de Firebase Auth (dependiendo de cómo se importa, lo omitimos si auth.js lo controla o lo llamamos si existe)
+// --- Inicio de Aplicación ---
+console.log("🚀 Aplicación v1.1 iniciando...");
+
+try {
+    // Interceptar form submissions para auth
+    const attachAuthListeners = () => {
+        const formLogin = document.getElementById('form-login');
+        if (formLogin) {
+            console.log("✅ Listener de login adjuntado");
+            formLogin.onsubmit = (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value.trim().toLowerCase();
+                const pass = document.getElementById('login-pass').value;
+                window.loginUser(email, pass);
+                return false;
+            };
+        }
+
+        const formRegister = document.getElementById('form-register');
+        if (formRegister) {
+            console.log("✅ Listener de registro adjuntado");
+            formRegister.onsubmit = (e) => {
+                e.preventDefault();
+                window.registerUser({
+                    email: document.getElementById('reg-email').value.trim().toLowerCase(),
+                    pass: document.getElementById('reg-pass').value,
+                    advisorKey: document.getElementById('reg-advisor').value,
+                    nombre: document.getElementById('reg-name').value.trim(),
+                    telefono: document.getElementById('reg-phone').value.trim(),
+                    codigo: document.getElementById('reg-code').value.trim()
+                });
+                return false;
+            };
+        }
+    };
+
+    // Ejecutar inmediatamente y también en el observer de Auth para re-vincular si es necesario
+    attachAuthListeners();
     if (typeof initAuthObserver === 'function') initAuthObserver();
 
-    // Interceptar form submissions para auth
-    const formLogin = document.getElementById('form-login');
-    if (formLogin) {
-        formLogin.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value.trim().toLowerCase();
-            const pass = document.getElementById('login-pass').value;
-            window.loginUser(email, pass);
-        });
-    }
-    const formRegister = document.getElementById('form-register');
-    if (formRegister) {
-        formRegister.addEventListener('submit', (e) => {
-            e.preventDefault();
-            window.registerUser({
-                email: document.getElementById('reg-email').value.trim().toLowerCase(),
-                pass: document.getElementById('reg-pass').value,
-                advisorKey: document.getElementById('reg-advisor').value,
-                nombre: document.getElementById('reg-name').value.trim(),
-                telefono: document.getElementById('reg-phone').value.trim(),
-                codigo: document.getElementById('reg-code').value.trim()
-            });
-        });
-    }
+} catch (err) {
+    console.error("❌ Error crítico en la inicialización:", err);
+}
 
-    // Funciones que faltaron de admin (se pueden refactorizar a admin.js después si se quiere)
-    window.updateIASelectors = () => {
-        const n = document.getElementById('ia-nivel').value;
-        const sel = document.getElementById('ia-modulo');
-        const cont = document.getElementById('ia-saberes-container');
-        sel.innerHTML = ''; cont.innerHTML = '';
-        import('./config.js').then(({ SABERES_DATA }) => {
-            if (!SABERES_DATA[n]) return;
-            SABERES_DATA[n].modulos.forEach((m, i) => sel.innerHTML += `<option value="${i}">${m.n}</option>`);
-            window.updateSaberesChecks();
-        });
-    };
+// Auto-scroll to top para UX móvil
+window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    window.updateSaberesChecks = () => {
-        const n = document.getElementById('ia-nivel').value;
-        const mIdx = document.getElementById('ia-modulo').value;
-        const cont = document.getElementById('ia-saberes-container');
-        cont.innerHTML = '';
-        import('./config.js').then(({ SABERES_DATA }) => {
-            SABERES_DATA[n].modulos[mIdx].s.forEach((s, idx) => {
-                cont.innerHTML += `<label class="flex items-center gap-2 text-xs"><input type="checkbox" name="ia-saber" value="${s.n}" class="w-3 h-3 text-teal-600 rounded"> ${s.n}</label>`;
-            });
-        });
-    };
+// Funciones que faltaron de admin (se pueden refactorizar a admin.js después si se quiere)
+window.updateIASelectors = () => {
+    const n = document.getElementById('ia-nivel').value;
+    const sel = document.getElementById('ia-modulo');
+    const cont = document.getElementById('ia-saberes-container');
+    sel.innerHTML = ''; cont.innerHTML = '';
+    import('./config.js').then(({ SABERES_DATA }) => {
+        if (!SABERES_DATA[n]) return;
+        SABERES_DATA[n].modulos.forEach((m, i) => sel.innerHTML += `<option value="${i}">${m.n}</option>`);
+        window.updateSaberesChecks();
+    });
+};
 
-    const iaNivelSel = document.getElementById('ia-nivel');
-    if (iaNivelSel) iaNivelSel.addEventListener('change', window.updateIASelectors);
-    const iaModSel = document.getElementById('ia-modulo');
-    if (iaModSel) iaModSel.addEventListener('change', window.updateSaberesChecks);
-});
+window.updateSaberesChecks = () => {
+    const n = document.getElementById('ia-nivel').value;
+    const mIdx = document.getElementById('ia-modulo').value;
+    const cont = document.getElementById('ia-saberes-container');
+    cont.innerHTML = '';
+    import('./config.js').then(({ SABERES_DATA }) => {
+        SABERES_DATA[n].modulos[mIdx].s.forEach((s, idx) => {
+            cont.innerHTML += `<label class="flex items-center gap-2 text-xs"><input type="checkbox" name="ia-saber" value="${s.n}" class="w-3 h-3 text-teal-600 rounded"> ${s.n}</label>`;
+        });
+    });
+};
+
+const iaNivelSel = document.getElementById('ia-nivel');
+if (iaNivelSel) iaNivelSel.addEventListener('change', window.updateIASelectors);
+const iaModSel = document.getElementById('ia-modulo');
+if (iaModSel) iaModSel.addEventListener('change', window.updateSaberesChecks);
+
