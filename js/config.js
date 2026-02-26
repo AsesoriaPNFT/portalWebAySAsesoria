@@ -106,4 +106,4 @@ export const SABERES_DATA = {
     }
 };
 
-export { app, auth, db, storage };
+
