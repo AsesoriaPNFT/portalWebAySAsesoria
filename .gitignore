@@ -1,0 +1,17 @@
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+.firebaserc
+
+# Node dependencies
+node_modules/
+functions/node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Workspace
+.vscode/
+*.code-workspace
