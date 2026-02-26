@@ -5,11 +5,9 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase
 import { getStorage } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 import { getFunctions } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js";
 
-// Decodificar Base64 de la configuración embebida
-const _k = atob("QUl6YVN5RDRkRnhXN3cxWFRvRkhlWUVtSUo0Q2hGNDhJb09yQ0Fj");
-
+// Configuración de Firebase
 const firebaseConfig = {
-    apiKey: _k,
+    apiKey: "AIzaSyD4dFxW7w1XToFHeYEmIJ4ChF48IoOrCAc",
     authDomain: "pnft-7af7f.firebaseapp.com",
     projectId: "pnft-7af7f",
     storageBucket: "pnft-7af7f.firebasestorage.app",
