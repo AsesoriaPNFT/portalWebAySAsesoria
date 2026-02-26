@@ -287,18 +287,19 @@
                 <div id="tab-register" class="tab-btn rounded-xl" onclick="switchAuthTab('register')">REGISTRO</div>
             </div>
 
-            <div id="form-login" class="space-y-4">
+            <form id="form-login" class="space-y-4">
                 <div class="relative group">
                     <i
                         class="ph ph-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#025964]"></i>
-                    <input type="email" id="login-email" class="input-field !pl-12" placeholder="Correo (@mep.go.cr)">
+                    <input type="email" id="login-email" class="input-field !pl-12" placeholder="Correo (@mep.go.cr)"
+                        required>
                 </div>
                 <div class="relative group">
                     <i
                         class="ph ph-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#025964]"></i>
-                    <input type="password" id="login-pass" class="input-field !pl-12" placeholder="Contraseña">
+                    <input type="password" id="login-pass" class="input-field !pl-12" placeholder="Contraseña" required>
                 </div>
-                <button onclick="loginUser()"
+                <button type="submit"
                     class="w-full bg-[#025964] hover:bg-[#008e9b] text-white font-bold py-4 rounded-2xl transition-all hover:scale-[1.01] active:scale-[0.98] mt-4 shadow-xl shadow-[#025964]/10">
                     Iniciar Sesión
                 </button>
@@ -307,34 +308,34 @@
                         class="text-[10px] font-black text-[#025964] uppercase tracking-widest hover:underline decoration-2 underline-offset-4">¿Olvidaste
                         tu contraseña?</a>
                 </p>
-            </div>
+            </form>
 
 
-            <div id="form-register" class="hidden space-y-3">
-                <input type="text" id="reg-name" class="input-field" placeholder="Nombre Completo">
-                <input type="email" id="reg-email" class="input-field" placeholder="Correo (@mep.go.cr)">
+            <form id="form-register" class="hidden space-y-3">
+                <input type="text" id="reg-name" class="input-field" placeholder="Nombre Completo" required>
+                <input type="email" id="reg-email" class="input-field" placeholder="Correo (@mep.go.cr)" required>
                 <div class="grid grid-cols-2 gap-3">
-                    <input type="text" id="reg-phone" class="input-field" placeholder="Celular" maxlength="8">
-                    <input type="text" id="reg-code" class="input-field" placeholder="Cód. Inst.">
+                    <input type="text" id="reg-phone" class="input-field" placeholder="Celular" maxlength="8" required>
+                    <input type="text" id="reg-code" class="input-field" placeholder="Cód. Inst." required>
                 </div>
-                <input type="password" id="reg-pass" class="input-field" placeholder="Contraseña">
+                <input type="password" id="reg-pass" class="input-field" placeholder="Contraseña" required>
 
                 <div class="group">
                     <label
                         class="block text-[9px] font-black text-[#025964] uppercase tracking-widest mb-2 ml-1">Selecciona
                         tu Asesor</label>
-                    <select id="reg-advisor" class="input-field cursor-pointer">
+                    <select id="reg-advisor" class="input-field cursor-pointer" required>
                         <option value="none">-- Selecciona tu Asesor --</option>
                         <option value="alberto">Alberto Bustos Ortega</option>
                         <option value="rodolfo">Rodolfo Juárez Pérez</option>
                         <option value="admin">Personal Administrativo / Nacional</option>
                     </select>
                 </div>
-                <button onclick="registerUser()"
+                <button type="submit"
                     class="w-full bg-[#008e9b] hover:bg-[#025964] text-white font-bold py-4 rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] mt-4 shadow-xl shadow-[#008e9b]/10">
                     Crear Cuenta
                 </button>
-            </div>
+            </form>
 
             <p id="status-msg" class="mt-8 text-xs text-center font-bold min-h-[1.5em] tracking-wide"></p>
         </div>

@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 advisorKey: document.getElementById('reg-advisor').value,
                 nombre: document.getElementById('reg-name').value.trim(),
                 telefono: document.getElementById('reg-phone').value.trim(),
-                codigo: document.getElementById('reg-codigo').value.trim()
+                codigo: document.getElementById('reg-code').value.trim()
             });
         });
     }
